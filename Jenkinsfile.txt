@@ -1,28 +1,25 @@
 pipeline {
-    agent any  // This means the pipeline can run on any available agent
+    agent any
 
     tools {
-        maven 'Maven3'  // Name of the Maven installation configured in Jenkins
+        maven 'Maven3'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from the Git repository
-                git 'https://github.com/your-org/my-maven-app-java21.git' // Replace with your repo URL
+                echo 'Checkout done by Jenkins from SCM config'
             }
         }
 
         stage('Build') {
             steps {
-                // Clean and package the Maven project
                 sh 'mvn clean package'
             }
         }
 
         stage('Archive Artifact') {
             steps {
-                // Archive the generated .jar artifact from the build
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
@@ -30,10 +27,10 @@ pipeline {
 
     post {
         success {
-            echo 'Build successful!'  // Print message on successful build
+            echo 'Build successful!'
         }
         failure {
-            echo 'Build failed!'  // Print message on failed build
+            echo 'Build failed!'
         }
     }
 }
